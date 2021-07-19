@@ -4,7 +4,7 @@ Inventory Tracker Website <br />
 Designed to track inventory and expenses, user information stored through mongoDB. <br />
 
 Features: <br />
-Login/register page (info is unique to user) <br />
+Login/register page <br />
 Hash and salt for user privacy <br />
 Graphic/numeric representation of profits/expenses <br />
 Numeric representation of archived/currently managed items <br />
