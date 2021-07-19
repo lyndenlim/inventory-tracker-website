@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="icon" href="https://img.icons8.com/material-outlined/100/000000/carbon.png">
+   <title>Inventory</title>
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+   <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+   <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.1/css/select.bootstrap4.min.css">
+   <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="/dashboard"><img src="https://img.icons8.com/small/50/000000/carbon.png" />
+         Carbon</a>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+         <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+               <a class="nav-link" id="white" href="/logout">Log Out</a>
+            </li>
+         </ul>
+      </div>
+   </nav>
+   <div class="row table">
+      <div class="col-2 navigation">
+         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <a class="nav-link" id="v-pills-dashboard-tab" href="/dashboard" role="tab"
+               aria-controls="v-pills-dashboard" aria-selected="false">
+               <center>Dashboard &nbsp;<i class="fas fa-chart-bar"></i></center>
+            </a>
+            <a class="nav-link active" id="v-pills-inventory-tab" href="/inventory" role="tab"
+               aria-controls="v-pills-inventory" aria-selected="true">
+               <center>Inventory &nbsp;<i class="fas fa-box-open"></i></center>
+            </a>
+            <a class="nav-link" id="v-pills-sales-tab" href="/sales" role="tab" aria-controls="v-pills-sales"
+               aria-selected="false">
+               <center>Sales &nbsp;<i class="fas fa-dollar-sign"></i></center>
+            </a>
+            <a class="nav-link" id="v-pills-expenses-tab" href="/expenses" role="tab" aria-controls="v-pills-expenses"
+               aria-selected="false">
+               <center>Expenses &nbsp;<i class="fas fa-search-dollar"></i></center>
+            </a>
+            <a class="nav-link" id="v-pills-expenses-tab" href="/feecalculator" role="tab"
+               aria-controls="v-pills-feecalculator" aria-selected="false">
+               <center>Fee Calculator &nbsp;<i class="fas fa-calculator"></i></i></center>
+            </a>
+         </div>
+      </div>
+      <div class="col-10">
+         <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade" id="v-pills-dashboard" role="tabpanel" aria-labelledby="v-pills-dashboard-tab">
+            </div>
+            <div class="tab-pane fade show active" id="v-pills-inventory" role="tabpanel"
+               aria-labelledby="v-pills-inventory-tab">
+               <div class="row"></div>
+               <div class="row"></div>
+               <div class="row">
+                  <div class="col-10 container"></div>
+                  <div class="col-2 container">
+                     <button id="inventoryAddButton" type="button" class="btn btn-primary show-add"
+                        style="background-color:#1E90FF" data-toggle="modal" data-target="#inventoryAddModal">
+                        <i class="fa fa-plus"></i>
+                     </button>
+                     <div class="modal fade" id="inventoryAddModal" tabindex="-1" role="dialog"
+                        aria-labelledby="addItem" aria-hidden="true">
+                        <div class="modal-dialog">
+                           <div class="modal-content">
+                              <div class="modal-header">
+                                 <h5 class="modal-title">Add an item</h5>
+                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                 </button>
+                              </div>
+                              <form id="inventoryForm" autocomplete="off">
+                                 <div class="modal-body">
+                                    <div class="form-group">
+                                       <label for="inventoryItem">Item <span style="color:red">*</span></label>
+                                       <input class="form-control inventoryItem" type="text" required
+                                          name="inventoryItem" autofocus>
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="inventoryFrom">Purchased From</label>
+                                       <input class="form-control inventoryPurchasedFrom" type="text"
+                                          name="inventoryPurchasedFrom">
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="inventoryPurchasePrice">Purchase Price (per item) <span
+                                             style="color:red">*</span></label>
+                                       <input class="form-control inventoryPurchasePrice" min="0" step="any" required
+                                          type="number" name="inventoryPurchasePrice">
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="inventoryColor">Color/Style</label>
+                                       <input class="form-control inventoryColor" type="text" name="inventoryColor">
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="inventorySize">Size</label>
+                                       <select class="custom-select inventorySize" name="inventorySize">
+                                          <option>N/A</option>
+                                          <option>One Size</option>
+                                          <option>X-Small</option>
+                                          <option>Small</option>
+                                          <option>Small/Medium</option>
+                                          <option>Medium</option>
+                                          <option>Medium/Large</option>
+                                          <option>Large</option>
+                                          <option>X-Large</option>
+                                          <option>2C</option>
+                                          <option>3C</option>
+                                          <option>4C</option>
+                                          <option>5C</option>
+                                          <option>6C</option>
+                                          <option>7C</option>
+                                          <option>8C</option>
+                                          <option>9C</option>
+                                          <option>10C</option>
+                                          <option>1Y</option>
+                                          <option>1.5Y</option>
+                                          <option>2Y</option>
+                                          <option>2.5Y</option>
+                                          <option>3Y</option>
+                                          <option>3.5Y</option>
+                                          <option>4Y</option>
+                                          <option>4.5Y</option>
+                                          <option>5Y</option>
+                                          <option>5.5Y</option>
+                                          <option>6Y</option>
+                                          <option>6.5Y</option>
+                                          <option>7Y</option>
+                                          <option>4W</option>
+                                          <option>4.5W</option>
+                                          <option>5W</option>
+                                          <option>5.5W</option>
+                                          <option>6W</option>
+                                          <option>6.5W</option>
+                                          <option>7W</option>
+                                          <option>7.5W</option>
+                                          <option>8W</option>
+                                          <option>8.5W</option>
+                                          <option>9W</option>
+                                          <option>9.5W</option>
+                                          <option>10W</option>
+                                          <option>10.5W</option>
+                                          <option>11W</option>
+                                          <option>11.5W</option>
+                                          <option>12W</option>
+                                          <option>12.5W</option>
+                                          <option>13W</option>
+                                          <option>13.5W</option>
+                                          <option>14W</option>
+                                          <option>14.5W</option>
+                                          <option>15W</option>
+                                          <option>15.5W</option>
+                                          <option>16W</option>
+                                          <option>4</option>
+                                          <option>4.5</option>
+                                          <option>5</option>
+                                          <option>5.5</option>
+                                          <option>6</option>
+                                          <option>6.5</option>
+                                          <option>7</option>
+                                          <option>7.5</option>
+                                          <option>8</option>
+                                          <option>8.5</option>
+                                          <option>9</option>
+                                          <option>9.5</option>
+                                          <option>10</option>
+                                          <option>10.5</option>
+                                          <option>11</option>
+                                          <option>11.5</option>
+                                          <option>12</option>
+                                          <option>12.5</option>
+                                          <option>13</option>
+                                          <option>13.5</option>
+                                          <option>14</option>
+                                       </select>
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="inventoryQuantity">Quantity <span style="color:red">*</span></label>
+                                       <input class="form-control inventoryQuantity" type="number" required value="1"
+                                          name="inventoryQuantity">
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="inventoryPurchaseDate">Purchase Date <span
+                                             style="color:red">*</span></label>
+                                       <div class="input-group date" id="inventoryPurchaseDate"
+                                          data-target-input="nearest">
+                                          <input type="text"
+                                             class="form-control datetimepicker-input inventoryPurchaseDate" required
+                                             data-target="#inventoryPurchaseDate" name="inventoryPurchaseDate" />
+                                          <div class="input-group-append" data-target="#inventoryPurchaseDate"
+                                             data-toggle="datetimepicker">
+                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                       <button type="button" class="btn btn-secondary"
+                                          data-dismiss="modal">Close</button>
+                                       <button type="submit" class="btn btn-primary inventorySaveButton">Add</button>
+                                    </div>
+                                 </div>
+                              </form>
+                           </div>
+                        </div>
+                     </div>
+                     <button id="inventoryEditButton" class="btn btn-outline-secondary edit"><i
+                           class="fas fa-edit"></i></button>
+                     <div class="modal fade" id="inventoryEditModal" tabindex="-1" role="dialog"
+                        aria-labelledby="editItem" aria-hidden="true">
+                        <div class="modal-dialog">
+                           <div class="modal-content">
+                              <div class="modal-header">
+                                 <h5 class="modal-title">Edit an item</h5>
+                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                 </button>
+                              </div>
+                              <form id="inventoryEditForm" autocomplete="off">
+                                 <div class="modal-body">
+                                    <div class="form-group">
+                                       <label for="editInventoryItem">Item <span style="color:red">*</span></label>
+                                       <input class="form-control editInventoryItem" type="text" required
+                                          name="editInventoryItem" autofocus>
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="editInventoryPurchasedFrom">Purchased From</label>
+                                       <input class="form-control editInventoryPurchasedFrom" type="text"
+                                          name="editInventoryPurchasedFrom">
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="editInventoryPurchasePrice"> Purchase Price (per item) <span
+                                             style="color:red">*</span></label>
+                                       <input class="form-control editInventoryPurchasePrice" min="0" step="any"
+                                          required type="number" name="editInventoryPurchasePrice">
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="editInventoryColor">Color/Style</label>
+                                       <input class="form-control editInventoryColor" type="text"
+                                          name="editInventoryColor">
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="editInventorySize">Size</label>
+                                       <select class="custom-select editInventorySize" name="editInventorySize">
+                                          <option>N/A</option>
+                                          <option>One Size</option>
+                                          <option>XX-Small</option>
+                                          <option>X-Small</option>
+                                          <option>Small</option>
+                                          <option>Small/Medium</option>
+                                          <option>Medium</option>
+                                          <option>Medium/Large</option>
+                                          <option>Large</option>
+                                          <option>X-Large</option>
+                                          <option>XX-Large</option>
+                                          <option>2C</option>
+                                          <option>3C</option>
+                                          <option>4C</option>
+                                          <option>5C</option>
+                                          <option>6C</option>
+                                          <option>7C</option>
+                                          <option>8C</option>
+                                          <option>9C</option>
+                                          <option>10C</option>
+                                          <option>1Y</option>
+                                          <option>1.5Y</option>
+                                          <option>2Y</option>
+                                          <option>2.5Y</option>
+                                          <option>3Y</option>
+                                          <option>3.5Y</option>
+                                          <option>4Y</option>
+                                          <option>4.5Y</option>
+                                          <option>5Y</option>
+                                          <option>5.5Y</option>
+                                          <option>6Y</option>
+                                          <option>6.5Y</option>
+                                          <option>7Y</option>
+                                          <option>4W</option>
+                                          <option>4.5W</option>
+                                          <option>5W</option>
+                                          <option>5.5W</option>
+                                          <option>6W</option>
+                                          <option>6.5W</option>
+                                          <option>7W</option>
+                                          <option>7.5W</option>
+                                          <option>8W</option>
+                                          <option>8.5W</option>
+                                          <option>9W</option>
+                                          <option>9.5W</option>
+                                          <option>10W</option>
+                                          <option>10.5W</option>
+                                          <option>11W</option>
+                                          <option>11.5W</option>
+                                          <option>12W</option>
+                                          <option>12.5W</option>
+                                          <option>13W</option>
+                                          <option>13.5W</option>
+                                          <option>14W</option>
+                                          <option>14.5W</option>
+                                          <option>15W</option>
+                                          <option>15.5W</option>
+                                          <option>16W</option>
+                                          <option>4</option>
+                                          <option>4.5</option>
+                                          <option>5</option>
+                                          <option>5.5</option>
+                                          <option>6</option>
+                                          <option>6.5</option>
+                                          <option>7</option>
+                                          <option>7.5</option>
+                                          <option>8</option>
+                                          <option>8.5</option>
+                                          <option>9</option>
+                                          <option>9.5</option>
+                                          <option>10</option>
+                                          <option>10.5</option>
+                                          <option>11</option>
+                                          <option>11.5</option>
+                                          <option>12</option>
+                                          <option>12.5</option>
+                                          <option>13</option>
+                                          <option>13.5</option>
+                                          <option>14</option>
+                                       </select>
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="editInventoryQuantity">Quantity <span
+                                             style="color:red">*</span></label>
+                                       <input class="form-control editInventoryQuantity" type="number" required
+                                          value="1" name="editInventoryQuantity">
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="editInventoryPurchaseDate">Purchase Date <span
+                                             style="color:red">*</span></label>
+                                       <div class="input-group date" id="editInventoryPurchaseDate"
+                                          data-target-input="nearest">
+                                          <input type="text"
+                                             class="form-control datetimepicker-input editInventoryPurchaseDate"
+                                             required data-target="#editInventoryPurchaseDate"
+                                             name="editInventoryPurchaseDate" />
+                                          <div class="input-group-append" data-target="#editInventoryPurchaseDate"
+                                             data-toggle="datetimepicker">
+                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                       <button type="button" class="btn btn-secondary"
+                                          data-dismiss="modal">Close</button>
+                                       <button type="submit" class="btn btn-primary inventoryID"
+                                          name="inventoryID">Save</button>
+                                    </div>
+                                 </div>
+                              </form>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="modal fade" id="markSold" tabindex="-1" role="dialog" aria-labelledby="markSold"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                           <div class="modal-content">
+                              <div class="modal-header">
+                                 <h5 class="modal-title">Marking item as sold</h5>
+                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                 </button>
+                              </div>
+                              <form id="sold" autocomplete="off">
+                                 <div class="modal-body">
+                                    <div class="form-group">
+                                       <label for="markSoldPrice">Sold Price <span style="color:red">*</span></label>
+                                       <input class="form-control markSoldPrice" step="any" type="number" required autofocus
+                                          name="markSoldPrice">
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="markSoldDate">Sold Date <span style="color:red">*</span></label>
+                                       <div class="input-group date" id="markSoldDate" data-target-input="nearest">
+                                          <input type="text" class="form-control datetimepicker-input markSoldDate"
+                                             required data-target="#markSoldDate" name="markSoldDate" />
+                                          <div class="input-group-append" data-target="#markSoldDate"
+                                             data-toggle="datetimepicker">
+                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                       <button type="button" class="btn btn-secondary"
+                                          data-dismiss="modal">Close</button>
+                                       <button type="submit" class="btn btn-primary soldID" name="soldID">Mark
+                                          sold</button>
+                                    </div>
+                                 </div>
+                              </form>
+                           </div>
+                        </div>
+                     </div>
+                     <button id="inventoryDeleteButton" value="" class="btn btn-danger oneLine"
+                        name="inventoryDeleteButton"><i class="fas fa-trash-alt"></i></button>
+                     <div class="dropdown oneLine">
+                        <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenu2"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           Actions
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                           <button class="dropdown-item markSold" name="sold">Mark sold</button>
+                           <button class="dropdown-item duplicateInventory" id="duplicateInventory"
+                              name="duplicateInventory">Duplicate</button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="row"></div>
+            <table id="inventory" class="table table-striped table-bordered">
+               <thead>
+                  <tr>
+                     <th class="hidden">ID</th>
+                     <th>Item</th>
+                     <th>Purchased From</th>
+                     <th>Price</th>
+                     <th>Color/Style</th>
+                     <th>Size</th>
+                     <th>Quantity</th>
+                     <th>Purchase Date</th>
+                     <th class="hidden">Current Spent</th>
+
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td class="hidden"></td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="hidden"></td>
+                  </tr>
+               </tbody>
+               <tfoot>
+                  <tr>
+                     <td colspan='2'>
+                        <span style="float:right;" id="currentSpent"></span>
+                     </td>
+                  </tr>
+               </tfoot>
+            </table>
+         </div>
+         <div class="tab-pane fade" id="v-pills-sales" role="tabpanel" aria-labelledby="v-pills-sales-tab"></div>
+         <div class="tab-pane fade" id="v-pills-expenses" role="tabpanel" aria-labelledby="v-pills-expenses-tab"></div>
+         <div class="tab-pane fade" id="v-pills-feecalculator" role="tabpanel"
+            aria-labelledby="v-pills-feecalculator-tab"></div>
+      </div>
+   </div>
+   </div>
+   <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+      integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"></script>
+   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+   <script type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
+   <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+   <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+   <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
+   <script src="https://use.fontawesome.com/releases/v5.14.0/js/all.js" data-auto-replace-svg="nest"></script>
+   <script src="/js/accounting.js"></script>
+   <script src="/js/index.js"></script>
+</body>
+
+</html>

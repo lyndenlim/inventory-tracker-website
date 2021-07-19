@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="icon" href="https://img.icons8.com/material-outlined/100/000000/carbon.png">
+   <title>Dashboard</title>
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+   <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.1/css/select.bootstrap4.min.css">
+   <link rel="stylesheet" href="/css/style.css">
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+</head>
+
+<body>
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="/dashboard"><img src="https://img.icons8.com/small/50/000000/carbon.png" />
+         Carbon</a>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+         <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+               <a class="nav-link" id="white" href="/logout">Log Out</a>
+            </li>
+         </ul>
+      </div>
+   </nav>
+   <div class="row table">
+      <div class="col-2 navigation">
+         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <a class="nav-link active" id="v-pills-dashboard-tab" href="/dashboard" role="tab"
+               aria-controls="v-pills-dashboard" aria-selected="true">
+               <center>Dashboard &nbsp;<i class="fas fa-chart-bar"></i></center>
+            </a>
+            <a class="nav-link" id="v-pills-inventory-tab" href="/inventory" role="tab"
+               aria-controls="v-pills-inventory" aria-selected="false">
+               <center>Inventory &nbsp;<i class="fas fa-box-open"></i></center>
+            </a>
+            <a class="nav-link" id="v-pills-sales-tab" href="/sales" role="tab" aria-controls="v-pills-sales"
+               aria-selected="false">
+               <center>Sales &nbsp;<i class="fas fa-dollar-sign"></i></center>
+            </a>
+            <a class="nav-link" id="v-pills-expenses-tab" href="/expenses" role="tab" aria-controls="v-pills-expenses"
+               aria-selected="false">
+               <center>Expenses &nbsp;<i class="fas fa-search-dollar"></i></center>
+            </a>
+            <a class="nav-link" id="v-pills-expenses-tab" href="/feecalculator" role="tab"
+               aria-controls="v-pills-feecalculator" aria-selected="true">
+               <center>Fee Calculator &nbsp;<i class="fas fa-calculator"></i></i></center>
+            </a>
+         </div>
+      </div>
+      <div class="col-6 container" style="padding-top: 80px;">
+         <div class="card centered">
+            <h4 class="card-header bg-dark text-white">Lifetime</h4>
+            <div class="card-body">
+               <canvas id="myChart">
+                  <div id="profitData"><%=JSON.stringify(sItems)%></div>
+                  <div id="expensesData"><%=JSON.stringify(graphExpenses)%></div>
+               </canvas>
+               <script>
+                  var jan_prof = []
+                  var feb_prof = []
+                  var mar_prof = []
+                  var apr_prof = []
+                  var may_prof = []
+                  var jun_prof = []
+                  var jul_prof = []
+                  var aug_prof = []
+                  var sep_prof = []
+                  var oct_prof = []
+                  var nov_prof = []
+                  var dec_prof = []
+                  var jan_exp = []
+                  var feb_exp = []
+                  var mar_exp = []
+                  var apr_exp = []
+                  var may_exp = []
+                  var jun_exp = []
+                  var jul_exp = []
+                  var aug_exp = []
+                  var sep_exp = []
+                  var oct_exp = []
+                  var nov_exp = []
+                  var dec_exp = []
+                  var data_prof = JSON.parse(document.getElementById("profitData").innerHTML)
+                  var data_exp = JSON.parse(document.getElementById("expensesData").innerHTML)
+                  for (i = 0; i < data_prof.length; i++) {
+                     switch (Number(data_prof[i].sold_date.split("/")[0])) {
+                        case 1:
+                           jan_prof.push(data_prof[i].profit);
+                           break;
+                        case 2:
+                           feb_prof.push(data_prof[i].profit);
+                           break;
+                        case 3:
+                           mar_prof.push(data_prof[i].profit);
+                           break;
+                        case 4:
+                           apr_prof.push(data_prof[i].profit);
+                           break;
+                        case 5:
+                           may_prof.push(data_prof[i].profit);
+                           break;
+                        case 6:
+                           jun_prof.push(data_prof[i].profit);
+                           break;
+                        case 7:
+                           jul_prof.push(data_prof[i].profit);
+                           break;
+                        case 8:
+                           aug_prof.push(data_prof[i].profit);
+                           break;
+                        case 9:
+                           sep_prof.push(data_prof[i].profit);
+                           break;
+                        case 10:
+                           oct_prof.push(data_prof[i].profit);
+                           break;
+                        case 11:
+                           nov_prof.push(data_prof[i].profit);
+                           break;
+                        case 12:
+                           dec_prof.push(data_prof[i].profit);
+                           break;
+                     }
+                  }
+                  for (i = 0; i < data_exp.length; i++) {
+                     switch (Number(data_exp[i].purchase_date.split("/")[0])) {
+                        case 1:
+                           jan_exp.push(data_exp[i].purchase_price);
+                           break;
+                        case 2:
+                           feb_exp.push(data_exp[i].purchase_price);
+                           break;
+                        case 3:
+                           mar_exp.push(data_exp[i].purchase_price);
+                           break;
+                        case 4:
+                           apr_exp.push(data_exp[i].purchase_price);
+                           break;
+                        case 5:
+                           may_exp.push(data_exp[i].purchase_price);
+                           break;
+                        case 6:
+                           jun_exp.push(data_exp[i].purchase_price);
+                           break;
+                        case 7:
+                           jul_exp.push(data_exp[i].purchase_price);
+                           break;
+                        case 8:
+                           aug_exp.push(data_exp[i].purchase_price);
+                           break;
+                        case 9:
+                           sep_exp.push(data_exp[i].purchase_price);
+                           break;
+                        case 10:
+                           oct_exp.push(data_exp[i].purchase_price);
+                           break;
+                        case 11:
+                           nov_exp.push(data_exp[i].purchase_price);
+                           break;
+                        case 12:
+                           dec_exp.push(data_exp[i].purchase_price);
+                           break;
+                     }
+                  }
+                  var jan_prof_sum = jan_prof.reduce(function (a, b) {
+                     return a + b;
+                  }, 0);
+                  var feb_prof_sum = feb_prof.reduce(function (a, b) {
+                     return a + b;
+                  }, 0);
+                  var mar_prof_sum = mar_prof.reduce(function (a, b) {
+                     return a + b;
+                  }, 0);
+                  var apr_prof_sum = apr_prof.reduce(function (a, b) {
+                     return a + b;
+                  }, 0);
+                  var may_prof_sum = may_prof.reduce(function (a, b) {
+                     return a + b;
+                  }, 0);
+                  var jun_prof_sum = jun_prof.reduce(function (a, b) {
+                     return a + b;
+                  }, 0);
+                  var jul_prof_sum = jul_prof.reduce(function (a, b) {
+                     return a + b;
+                  }, 0);
+                  var aug_prof_sum = aug_prof.reduce(function (a, b) {
+                     return a + b;
+                  }, 0);
+                  var sep_prof_sum = sep_prof.reduce(function (a, b) {
+                     return a + b;
+                  }, 0);
+                  var oct_prof_sum = oct_prof.reduce(function (a, b) {
+                     return a + b;
+                  }, 0);
+                  var nov_prof_sum = nov_prof.reduce(function (a, b) {
+                     return a + b;
+                  }, 0);
+                  var dec_prof_sum = dec_prof.reduce(function (a, b) {
+                     return a + b;
+                  }, 0);
+
+                  var jan_exp_sum = jan_exp.reduce(function (a, b) {
+                     return a + b;
+                  }, 0);
+                  var feb_exp_sum = feb_exp.reduce(function (a, b) {
+                     return a + b;
+                  }, 0);
+                  var mar_exp_sum = mar_exp.reduce(function (a, b) {
+                     return a + b;
+                  }, 0);
+                  var apr_exp_sum = apr_exp.reduce(function (a, b) {
+                     return a + b;
+                  }, 0);
+                  var may_exp_sum = may_exp.reduce(function (a, b) {
+                     return a + b;
+                  }, 0);
+                  var jun_exp_sum = jun_exp.reduce(function (a, b) {
+                     return a + b;
+                  }, 0);
+                  var jul_exp_sum = jul_exp.reduce(function (a, b) {
+                     return a + b;
+                  }, 0);
+                  var aug_exp_sum = aug_exp.reduce(function (a, b) {
+                     return a + b;
+                  }, 0);
+                  var sep_exp_sum = sep_exp.reduce(function (a, b) {
+                     return a + b;
+                  }, 0);
+                  var oct_exp_sum = oct_exp.reduce(function (a, b) {
+                     return a + b;
+                  }, 0);
+                  var nov_exp_sum = nov_exp.reduce(function (a, b) {
+                     return a + b;
+                  }, 0);
+                  var dec_exp_sum = dec_exp.reduce(function (a, b) {
+                     return a + b;
+                  }, 0);
+
+                  const ctx = document.getElementById("myChart")
+                  const chart = new Chart(ctx, {
+                     type: 'line',
+                     data: {
+                        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                        datasets: [{
+                           label: "Profit",
+                           data: [jan_prof_sum.toFixed(2), feb_prof_sum.toFixed(2), mar_prof_sum.toFixed(2), apr_prof_sum.toFixed(2), may_prof_sum.toFixed(2), jun_prof_sum.toFixed(2), jul_prof_sum.toFixed(2), aug_prof_sum.toFixed(2), sep_prof_sum.toFixed(2), oct_prof_sum.toFixed(2), nov_prof_sum.toFixed(2), dec_prof_sum.toFixed(2)],
+                           pointBackgroundColor:
+                              'rgba(0, 255, 0, 0.5)',
+                           backgroundColor:
+                              'rgba(0, 255, 0, 0.2)',
+                           borderColor:
+                              'rgba(0, 0, 0, 1)',
+                           borderWidth: 1,
+                           lineTension: 0
+                        },
+                        {
+                           label: "Expense",
+                           data: [-Math.abs(jan_exp_sum.toFixed(2)), -Math.abs(feb_exp_sum.toFixed(2)), -Math.abs(mar_exp_sum.toFixed(2)), -Math.abs(apr_exp_sum.toFixed(2)), -Math.abs(may_exp_sum.toFixed(2)), -Math.abs(jun_exp_sum.toFixed(2)), -Math.abs(jul_exp_sum.toFixed(2)), -Math.abs(aug_exp_sum.toFixed(2)), -Math.abs(sep_exp_sum.toFixed(2)), -Math.abs(oct_exp_sum.toFixed(2)), -Math.abs(nov_exp_sum.toFixed(2)), -Math.abs(dec_exp_sum.toFixed(2))],
+                           pointBackgroundColor:
+                              'rgba(255, 0, 0, 0.5)',
+                           backgroundColor:
+                              'rgba(255, 0, 0, 0.2)',
+                           borderColor:
+                              'rgba(0, 0, 0, 1)',
+                           borderWidth: 1,
+                           lineTension: 0
+                        }]
+                     },
+                     options: {
+                        scales: {
+                           yAxes: [{
+                              ticks: {
+                                 beginAtZero: true,
+                                 callback: function (value, index, values) {
+                                    return '$' + value.toFixed(2);
+                                 }
+                              }
+                           }]
+                        }
+                     }
+                  });
+               </script>
+            </div>
+         </div>
+      </div>
+      <div class="col-4 container" style="padding-top: 80px;">
+         <div class="card centered">
+            <h4 class="card-header bg-dark text-white">Overview</h4>
+            <div class="card-body">
+               <h5><u>Inventory</u></h5>
+               <div>
+                  <p>Number of Items: <strong><%=iCount%></strong></p>
+                  <p>Current Amount Spent: <strong><%=currentSpent%></strong></p>
+               </div>
+               <h5><u>Sales</u></h5>
+               <div>
+                  <p>Number of Sales: <strong><%=sCount%></strong></p>
+                  <p>Total Profit: <strong style="color: green;"><%=profit%></strong></p>
+               </div>
+               <h5><u>Expenses</u></h5>
+               <div>
+                  <p>Total Expenses: <strong style="color: red;"><%=expenses%></strong></p>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+      integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"></script>
+   <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+   <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+   <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+   <script src="https://use.fontawesome.com/releases/v5.14.0/js/all.js" data-auto-replace-svg="nest"></script>
+</body>
+
+</html>

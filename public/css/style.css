@@ -1,0 +1,64 @@
+.navigation {
+    padding-left: 30px; 
+    padding-top: 100px; 
+}
+
+.navbar-brand {
+    font-size: 25px; 
+    font-weight: bold;
+}
+
+#v-pills-dashboard-tab, #v-pills-inventory-tab, #v-pills-sales-tab, #v-pills-expenses-tab, #v-pills-feecalculator-tab{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.row{
+    padding-bottom: 5px;
+}
+
+tbody, thead{
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+.oneLine {
+    display: inline-block;
+}
+
+.centered {
+    text-align: center;
+}
+
+.jumbotron{
+    height: 100vh;
+    padding-top: 190px;
+    background-color: #fff;
+}
+
+.top-padding {
+    padding-top: 10px; 
+}
+
+.bottom-padding{
+    padding-bottom: 10px; 
+}
+
+#white {
+    color: white;
+}
+
+.carbon {
+    font-family: 'Oswald', sans-serif;   
+}
+
+.pushDown {
+    padding-top: 25px;
+}
+
+.shrinkInput {
+    width: 35%;    
+}
