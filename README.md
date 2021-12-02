@@ -1,7 +1,7 @@
 # inventory-tracker-website
 Inventory Tracker Website <br />
 
-Hosted on Heroku: https://fathomless-tundra-34889.herokuapp.com/ <br />
+Hosted on Heroku
 Designed to track inventory and expenses, user information stored through mongoDB. <br />
 
 Features: <br />
