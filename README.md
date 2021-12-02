@@ -1,7 +1,7 @@
 # inventory-tracker-website
 Inventory Tracker Website <br />
 
-Hosted on Heroku
+Hosted on Heroku <br />
 Designed to track inventory and expenses, user information stored through mongoDB. <br />
 
 Features: <br />
